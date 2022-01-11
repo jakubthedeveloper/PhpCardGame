@@ -1,36 +1,38 @@
 <?php
 
-namespace Game;
+namespace PhpCardGame\Game;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \PhpCardGame\Game\Card
+ * @covers \PhpCardGame\Game\Card\Color
+ * @covers \PhpCardGame\Game\Card\Power
+ */
 class CardTest extends TestCase
 {
-    public function testCardHasRequiredAttributes()
+    public function testCardHasRequiredAttributes(): void
     {
         $card = new Card(
-            name: "My first card",
             color: Card\Color::Blue,
             points: 7,
         );
 
-        $this->assertEquals("My first card", $card->name);
         $this->assertEquals(Card\Color::Blue, $card->color);
         $this->assertEquals(7, $card->points());
     }
 
-    public function testCardHasPowers()
+    public function testCardHasPowers(): void
     {
         $card = new Card(
-            name: "My card with powers",
             color: Card\Color::Blue,
             points: 10,
             powers: [
-                new Card\Power\HitsColor(
+                new Card\Power(
                     colorToHit: Card\Color::Red,
                     hitStrength: 5
                 ),
-                new Card\Power\HitsColor(
+                new Card\Power(
                     colorToHit: Card\Color::Green,
                     hitStrength: 2
                 )
@@ -58,15 +60,14 @@ class CardTest extends TestCase
         );
     }
 
-    public function testCardHitsAnotherCard()
+    public function testCardHitsAnotherCard(): void
     {
-        $power = new Card\Power\HitsColor(
+        $power = new Card\Power(
             colorToHit: Card\Color::Yellow,
             hitStrength: 3
         );
 
         $cardThatHits = new Card(
-            name: "My Red Card",
             color: Card\Color::Red,
             points: 5,
             powers: [
@@ -75,7 +76,6 @@ class CardTest extends TestCase
         );
 
         $cartThatIsBeingHit = new Card(
-            name: "Victim Card",
             color: Card\Color::Yellow,
             points: 10
         );
@@ -98,15 +98,14 @@ class CardTest extends TestCase
         $this->assertEquals(0, $cartThatIsBeingHit->points());
     }
 
-    public function testCardDoesNotHitIfPowersDoesNotAllow()
+    public function testCardDoesNotHitIfPowersDoesNotAllow(): void
     {
-        $power = new Card\Power\HitsColor(
+        $power = new Card\Power(
             colorToHit: Card\Color::Blue,
             hitStrength: 3
         );
 
         $cardThatHits = new Card(
-            name: "My Red Card",
             color: Card\Color::Red,
             points: 5,
             powers: [
@@ -115,7 +114,6 @@ class CardTest extends TestCase
         );
 
         $cartThatIsBeingHit = new Card(
-            name: "Victim Card",
             color: Card\Color::Yellow,
             points: 10
         );

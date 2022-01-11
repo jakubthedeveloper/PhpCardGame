@@ -1,10 +1,25 @@
 <?php
 
-namespace Game\Card;
+namespace PhpCardGame\Game\Card;
 
-use Game\Card;
+use PhpCardGame\Game\Card;
 
-interface Power
+class Power
 {
-    public function applyTo(Card $card): void;
+    public function __construct(
+        public readonly Card\Color $colorToHit,
+        public readonly int $hitStrength
+    ) {
+
+    }
+
+    public function applyTo(Card $card): void
+    {
+        if ($card->color === $this->colorToHit)
+        {
+            $card->takeHit(
+                $this->hitStrength
+            );
+        }
+    }
 }

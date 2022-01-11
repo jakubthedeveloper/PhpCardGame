@@ -1,15 +1,13 @@
 <?php
 
-namespace Game;
+namespace PhpCardGame\Game;
 
-use Game\Card\Power;
-use Game\Card\Color;
+use PhpCardGame\Game\Card\Power;
 
 class Card
 {
     public function __construct(
-        public readonly string $name,
-        public readonly Color $color,
+        public readonly Card\Color $color,
         private int $points,
         /** @var Power[] */
         public readonly array $powers = [],
@@ -24,7 +22,7 @@ class Card
 
     public function hit(Card $cartThatIsBeingHit): void
     {
-        /** @var Power $power */
+        /** @var Card\Power $power */
         foreach ($this->powers as $power)
         {
             $power->applyTo($cartThatIsBeingHit);
